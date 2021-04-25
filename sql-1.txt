@@ -1,0 +1,40 @@
+select model,ram,screen from Laptop
+where price > 1000
+***
+select * from Printer
+where color = 'y'
+***
+SELECT PC.model, PC.speed, PC.hd 
+FROM PC 
+WHERE (PC.cd = '12x' OR 
+PC.cd = '24x') AND 
+price < 600
+***
+SELECT DISTINCT p.maker, l.speed
+FROM laptop l
+JOIN product p ON p.model = l.model
+WHERE l.hd >= 10
+***
+SELECT DISTINCT product.model, pc.price
+FROM Product JOIN pc ON product.model = pc.model WHERE maker = 'B'
+UNION
+SELECT DISTINCT product.model, laptop.price
+FROM product JOIN laptop ON product.model=laptop.model WHERE maker='B'
+UNION
+SELECT DISTINCT product.model, printer.price
+FROM product JOIN printer ON product.model=printer.model WHERE maker='B'
+***
+SELECT DISTINCT maker
+FROM product
+WHERE type = 'pc'
+EXCEPT
+SELECT DISTINCT product.maker
+FROM product
+Where type = 'laptop'
+***
+SELECT product.maker, AVG(pc.hd)
+FROM pc, product WHERE product.model = pc.model
+AND product.maker IN ( SELECT DISTINCT maker
+FROM product
+WHERE product.type = 'printer')
+GROUP BY maker
